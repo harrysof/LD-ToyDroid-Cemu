@@ -12,6 +12,8 @@ import android.widget.TextView
 import androidx.appcompat.widget.SearchView
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
+import com.example.dimensionspad.databinding.DialogFigurePickerBinding
+import com.example.dimensionspad.databinding.ItemFigureBinding
 
 class FigurePickerDialog(private val onFigureSelected: (FigureCatalogue.Figure) -> Unit) : androidx.fragment.app.DialogFragment() {
 
@@ -23,25 +25,25 @@ class FigurePickerDialog(private val onFigureSelected: (FigureCatalogue.Figure) 
         return dialog
     }
 
+    private var _binding: DialogFigurePickerBinding? = null
+    private val binding get() = _binding!!
+
     override fun onCreateView(
         inflater: LayoutInflater,
         container: ViewGroup?,
         savedInstanceState: Bundle?
-    ): View? {
-        val view = inflater.inflate(R.layout.dialog_figure_picker, container, false)
-        
-        val searchView = view.findViewById<SearchView>(R.id.searchView)
-        val recycler = view.findViewById<RecyclerView>(R.id.recyclerFigures)
+    ): View {
+        _binding = DialogFigurePickerBinding.inflate(inflater, container, false)
         
         adapter = FigureAdapter(FigureCatalogue.all) { figure ->
             onFigureSelected(figure)
             dismiss()
         }
         
-        recycler.layoutManager = LinearLayoutManager(context)
-        recycler.adapter = adapter
+        binding.recyclerFigures.layoutManager = LinearLayoutManager(context)
+        binding.recyclerFigures.adapter = adapter
         
-        searchView.setOnQueryTextListener(object : SearchView.OnQueryTextListener {
+        binding.searchView.setOnQueryTextListener(object : SearchView.OnQueryTextListener {
             override fun onQueryTextSubmit(query: String?): Boolean = false
             override fun onQueryTextChange(newText: String?): Boolean {
                 adapter.filter(newText)
@@ -49,7 +51,12 @@ class FigurePickerDialog(private val onFigureSelected: (FigureCatalogue.Figure) 
             }
         })
         
-        return view
+        return binding.root
+    }
+
+    override fun onDestroyView() {
+        super.onDestroyView()
+        _binding = null
     }
 
     override fun onStart() {
@@ -79,21 +86,17 @@ class FigurePickerDialog(private val onFigureSelected: (FigureCatalogue.Figure) 
             notifyDataSetChanged()
         }
 
-        class ViewHolder(view: View) : RecyclerView.ViewHolder(view) {
-            val name: TextView = view.findViewById(R.id.textFigureName)
-            val id: TextView = view.findViewById(R.id.textFigureId)
-        }
+        class ViewHolder(val binding: ItemFigureBinding) : RecyclerView.ViewHolder(binding.root)
 
         override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): ViewHolder {
-            val view = LayoutInflater.from(parent.context)
-                .inflate(R.layout.item_figure, parent, false)
-            return ViewHolder(view)
+            val binding = ItemFigureBinding.inflate(LayoutInflater.from(parent.context), parent, false)
+            return ViewHolder(binding)
         }
 
         override fun onBindViewHolder(holder: ViewHolder, position: Int) {
             val figure = filteredFigures[position]
-            holder.name.text = figure.name
-            holder.id.text = "ID: ${figure.id}"
+            holder.binding.textFigureName.text = figure.name
+            holder.binding.textFigureId.text = "ID: ${figure.id}"
             holder.itemView.setOnClickListener { onClick(figure) }
         }
 
