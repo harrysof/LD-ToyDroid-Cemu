@@ -1,0 +1,10 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="app_name">Dimensions Pad</string>
+    <string name="connect">Connect</string>
+    <string name="host_hint">PC IP Address (e.g. 192.168.1.50)</string>
+    <string name="slot_empty">Empty</string>
+    <string name="remove">Remove</string>
+    <string name="place_figure">Place Figure</string>
+    <string name="refresh">Refresh</string>
+</resources>
