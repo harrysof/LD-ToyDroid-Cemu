@@ -1,6 +1,6 @@
-# DimensionsPadApp
+# LD-ToyDroid-Cemu
 
-DimensionsPadApp is an Android companion application for [Cemu](https://github.com/cemu-project/Cemu) that allows you to wirelessly control the emulated LEGO Dimensions Toy Pad using your smartphone or tablet over your local network.
+LD-ToyDroid-Cemu is an Android companion application for [Cemu](https://github.com/cemu-project/Cemu) that allows you to wirelessly control the emulated LEGO Dimensions Toy Pad using your smartphone or tablet over your local network.
 
 ## Features
 
@@ -25,14 +25,14 @@ The server runs on an embedded background thread (port `8031`) and exposes the i
 
 This is a standard Android Studio / Gradle project.
 
-1. Open the `DimensionsPadApp` folder in **Android Studio**.
+1. Open the `LD-ToyDroid-Cemu` folder in **Android Studio**.
 2. Let Gradle sync the dependencies (OkHttp, Gson, Material Components).
 3. Build and run the app on an emulator or a physical Android device (API 26+).
 
 ## Usage
 
 1. Find the local IP address of the PC running Cemu (e.g., `192.168.1.50`). Both your PC and your Android device must be on the same local network.
-2. Open **DimensionsPadApp** on your Android device.
+2. Open **LD-ToyDroid-Cemu** on your Android device.
 3. Enter your PC's IP address in the top text field and tap **Connect**.
 4. The screen will populate with the 7 virtual Toy Pad slots.
 5. **To place a figure**: Tap "Place Figure" on an empty slot, search for your desired character or vehicle, and select it. It will instantly appear in the game.
